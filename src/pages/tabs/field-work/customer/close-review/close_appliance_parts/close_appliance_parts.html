@@ -1,0 +1,34 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-buttons start>
+            <button ion-button icon-only (click)="onCancel()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>Appliance</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <h4>{{includedAppliance.appliance.type.appliance}}</h4>
+    <p>{{includedAppliance.appliance.model_make}}</p>
+    <form [formGroup]="partsForm" (ngSubmit)="onSubmit()">
+        <ion-list>
+            <div formArrayName="requestedParts">
+                <div *ngFor="let part of includedAppliance.includedParts; let i = index">
+                    <div [formGroupName]="i">
+                        <ion-item>
+                            <ion-label>{{part.part.requested_part_number}}</ion-label>
+                            <ion-note item-end>Installed</ion-note>
+                            <ion-toggle [formControl]="part.toggle" (ionChange)="togglePartIncluded($event, part.part)"></ion-toggle>
+                        </ion-item>
+                    </div>
+                </div>
+            </div>
+        </ion-list>
+        <button ion-button block type="submit">Submit</button>
+    </form>
+
+</ion-content>

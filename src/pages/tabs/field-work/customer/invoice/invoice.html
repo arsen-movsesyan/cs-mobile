@@ -1,0 +1,88 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="onShowOptions()">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>
+            Invoice
+        </ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-list no-lines>
+        <ion-item>Invoice nubrer: <strong>{{invoice.invoice_string}}</strong></ion-item>
+        <ion-item>Invoice type: <strong>{{invoice.labor_type_readable}}</strong></ion-item>
+        <ion-item>Invoice Date: <strong>{{invoice.created_at|date:'shortDate'}}</strong></ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-item>
+            {{invoice.labor_type_readable}}
+            <ion-note item-end>
+                ${{invoice.labor_price}}
+            </ion-note>
+        </ion-item>
+        <div *ngIf="invoice.labor_type=='labor'">
+            <button ion-item *ngFor="let appliance of invoice.map_appliances">
+                Appliance Name Here
+            </button>
+            <ion-item>
+                Parts Total
+                <ion-note item-end>${{partsPrice()}}</ion-note>
+            </ion-item>
+            <ion-item *ngIf="invoice.decimal_tax_percent">
+                Tax
+                <ion-note item-end>${{partsTax()}}</ion-note>
+            </ion-item>
+        </div>
+        <ion-item>
+            <h4>Total</h4>
+            <ion-note item-end>${{invoiceTotal()}}</ion-note>
+        </ion-item>
+    </ion-list>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Provider</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <strong>{{customer.organization.organization_name}}</strong>
+            <p>
+                <ion-icon name="pin" item-left color="danger"></ion-icon>
+                {{customer.organization.address.mailing_address}}
+            </p>
+            <p>
+                <ion-icon name="call" item-left color="secondary"></ion-icon>
+                {{customer.organization.contacts.phone1_readable}}
+            </p>
+            <p>
+                <ion-icon name="ios-at-outline" item-left></ion-icon>
+                {{customer.organization.email}}
+            </p>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>For</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <strong>{{customer.full_name}}</strong>
+            <p>
+                <ion-icon name="pin" item-left color="danger"></ion-icon>
+                {{customer.address.mailing_address}}
+            </p>
+            <p>
+                <ion-icon name="call" item-left color="secondary"></ion-icon>
+                {{customer.contactinfo.phone1_readable}}
+            </p>
+            <p *ngIf="customer.contactinfo.phone2_readable">
+                <ion-icon name="call" item-left color="secondary"></ion-icon>
+                {{customer.contactinfo.phone2_readable}}
+            </p>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

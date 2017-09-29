@@ -1,0 +1,98 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="onShowOptions()">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>{{customer.full_name}}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-grid>
+        <!--INFO-->
+        <ion-row>
+            <ion-col>
+                <ion-list>
+                    <ion-item *ngIf="customer.order_status==4 || customer.order_status==5">
+                        Order is closed
+                    </ion-item>
+                    <!--ADDRESS-->
+                    <button ion-item (click)="onAddressClick()">
+                        <ion-icon name="pin" item-left color="danger"></ion-icon>
+                        Address
+                    </button>
+                    <!--END ADDRESS-->
+                    <!--EMAIL-->
+                    <ion-item-sliding *ngIf="customer.email" #slidingItem>
+                        <ion-item>
+                            <ion-icon name="ios-at-outline" item-left></ion-icon>
+                            {{customer.email}}
+                            <p>Slide to edit</p>
+                        </ion-item>
+                        <ion-item-options>
+                            <button ion-button color="primary" (click)="_addEditEmail(); slidingItem.close();">
+                                <ion-icon name="create"></ion-icon>
+                                Edit
+                            </button>
+                        </ion-item-options>
+                    </ion-item-sliding>
+                    <!--END EMAIL-->
+                    <button ion-item (click)="onContactLoad()">
+                        <ion-icon name="call" item-left color="secondary"></ion-icon>
+                        Contacts
+                    </button>
+                    <button ion-item (click)="onDetailLoad()">
+                        <ion-icon name="person" item-left color="primary"></ion-icon>
+                        Order Details
+                    </button>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+        <!--END INFO-->
+        <!--APPLIANCES-->
+        <ion-row>
+            <ion-col>
+                <ion-list>
+                    <ion-list-header>
+                        Appliances
+                        <button ion-button outline item-right icon-left (click)="onNewAppliance()">
+                            <ion-icon name="add"></ion-icon>
+                            Add Appliance
+                        </button>
+                    </ion-list-header>
+                    <button ion-item *ngFor="let appliance of appliances" (click)="onChooseAppliance(appliance)">
+                        <ion-icon name="outlet" item-left [color]="appliance.fixed ? 'secondary' : 'primary'"></ion-icon>
+                        {{appliance.type.appliance}} <p>{{appliance.model_make}}</p>
+                    </button>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+        <!--END APPLIANCES-->
+        <!--INVOICES-->
+
+        <ion-row>
+            <ion-col>
+                <ion-list>
+                    <ion-list-header *ngIf="appliances.length > 0">
+                        Invoices
+                        <button ion-button outline item-right icon-left (click)="onInvoiceGenerate()" color="secondary"
+                        *ngIf="invoiceAvailable()">
+                            <ion-icon name="add"></ion-icon>
+                            Generate Invoice
+                        </button>
+                    </ion-list-header>
+                    <button ion-item *ngFor="let invoice of invoices" (click)="onChooseInvoice(invoice)">
+                        <ion-icon name="cash" item-left color="secondary"></ion-icon>
+                        {{invoice.invoice_string}} <p>{{invoice.labor_type_readable}}</p>
+                    </button>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+
+
+    </ion-grid>
+</ion-content>

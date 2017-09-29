@@ -1,0 +1,33 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Order Details</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-card *ngFor="let appliance of customer.reported_appliances">
+        <ion-card-header>
+            {{appliance.type.appliance}}
+        </ion-card-header>
+        <ion-card-content>
+            <p>
+                {{appliance.problem_description}}
+            </p>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <h4>Dispatcher's Comment</h4>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                {{customer.dispatcher_comment}}
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

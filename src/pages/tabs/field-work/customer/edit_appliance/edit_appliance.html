@@ -1,0 +1,50 @@
+<ion-header>
+
+    <ion-navbar>
+
+        <ion-buttons start>
+            <button ion-button icon-only (click)="onCancel()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+
+        <ion-title>{{ mode }} appliance</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="applianceForm" (ngSubmit)="onSubmit()">
+        <ion-list>
+            <ion-item *ngIf="mode=='add'">
+                <ion-label floating>Appliance</ion-label>
+                <ion-select formControlName="type">
+                    <ion-option *ngFor="let type of applianceTypes" [value]="type.id">{{type.appliance}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Model Make</ion-label>
+                <ion-input type="text" formControlName="model_make"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Model Number</ion-label>
+                <ion-input type="text" formControlName="model_number"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Serial Number</ion-label>
+                <ion-input type="text" formControlName="serial_number"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Problem description</ion-label>
+                <ion-input type="text" formControlName="problem_description"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-textarea formControlName="detailed_problem_description" placeholder="Detailed Description"></ion-textarea>
+            </ion-item>
+        </ion-list>
+
+        <button ion-button type="submit" block [disabled]="!applianceForm.valid">
+            {{mode|uppercase}}
+        </button>
+    </form>
+</ion-content>

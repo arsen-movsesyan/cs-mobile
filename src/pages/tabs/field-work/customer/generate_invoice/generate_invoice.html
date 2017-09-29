@@ -1,0 +1,114 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Generate Invoice</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="invoiceForm" (ngSubmit)="onInvoiceSubmit()">
+
+        <div padding>
+            <ion-segment formControlName="invoiceType" [(ngModel)]="invoiceTypeDocument" (ionChange)="onSegmentChange($event)">
+                <ion-segment-button value="labor">
+                    Invoice
+                </ion-segment-button>
+                <ion-segment-button value="service_fee">
+                    Service Fee
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+
+        <div [ngSwitch]="invoiceTypeDocument">
+
+            <!--COMMON ITEMS LIST-->
+            <ion-list>
+                <ion-item>
+                    <ion-label fixed>Amount</ion-label>
+                    <ion-input type="number" formControlName="laborPrice" placeholder="0.00"></ion-input>
+                </ion-item>
+                <div *ngIf="invoiceTypeDocument == 'labor'">
+                    <ion-item>
+                        <ion-label>Tax Included</ion-label>
+                        <ion-checkbox [formControl]="taxIncluded" (ionChange)="toggleTaxInclude($event)"></ion-checkbox>
+                    </ion-item>
+                    <ion-item *ngIf="taxIncluded.value">
+                        <ion-label>Tax Value %</ion-label>
+                        <ion-input type="number" formControlName="decimalTaxPercent"></ion-input>
+                    </ion-item>
+                </div>
+
+                <ion-item>
+                    <ion-label floating>Payment Type</ion-label>
+                    <ion-select formControlName="paymentType">
+                        <ion-option value="1">Cash</ion-option>
+                        <ion-option value="2">Check</ion-option>
+                        <ion-option value="3">Credit Card</ion-option>
+                        <ion-option value="4">Postponed</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>Description</ion-label>
+                    <ion-textarea formControlName="description"></ion-textarea>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Close Order</ion-label>
+                    <ion-checkbox color="danger" formControlName="closeOrder"></ion-checkbox>
+                </ion-item>
+                <ion-item *ngIf="invoiceForm.controls.closeOrder.value">
+                    <ion-label>Reason</ion-label>
+                    <ion-input type="text" placeholder="Customer's choice" formControlName="closeReason"></ion-input>
+                </ion-item>
+            </ion-list>
+
+            <!--SUBMIT BUTTONS GROUP-->
+            <div *ngSwitchCase="'labor'">
+
+                <div formArrayName="mapAppliances">
+                    Appliances
+                    <ion-card *ngFor="let appliance of includedAppliances; let i=index">
+                        <ion-card-header>
+                            {{appliance.appliance.type.appliance}} {{appliance.appliance.model_make}}
+                        </ion-card-header>
+                        <ion-card-content [formGroupName]="i">
+                            <ion-list inset>
+                                <ion-item>
+                                    <ion-label>Included in Invoice</ion-label>
+                                    <ion-toggle
+                                        [formControl]="appliance.toggle"
+                                        (ionChange)="onToggleApplianceInclude($event, appliance.appliance)">
+                                    </ion-toggle>
+                                </ion-item>
+                                <button
+                                        ion-item
+                                        type="button"
+                                        (click)="onSelectAppliance(i)"
+                                        *ngIf="includedAppliances[i].includedParts.length > 0 && includedAppliances[i].toggle.value">
+                                    Parts
+                                    <ion-badge color="danger">{{includedAppliances[i].includedParts.length}}</ion-badge>
+                                </button>
+                                <ion-item *ngIf="includedAppliances[i].toggle.value">
+                                    <ion-label>Leave Unfixed</ion-label>
+                                    <ion-checkbox formControlName="leaveUnfixed" color="danger"></ion-checkbox>
+                                </ion-item>
+                            </ion-list>
+                        </ion-card-content>
+                    </ion-card>
+                </div>
+
+                <button ion-button block type="submit" [disabled]="!invoiceForm.valid">
+                    Generate Invoice
+                </button>
+            </div>
+
+            <div *ngSwitchCase="'service_fee'">
+                <button ion-button block type="submit" [disabled]="!invoiceForm.valid">
+                    Generate Service Fee
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+</ion-content>

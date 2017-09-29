@@ -1,0 +1,52 @@
+<ion-header>
+
+    <ion-navbar>
+
+        <ion-buttons start>
+            <button ion-button icon-only (click)="onCancel()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+
+        <ion-title>Choose Range</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <ion-list radio-group name="range" ngModel>
+            <ion-list-header>Preselected</ion-list-header>
+            <ion-item>
+                <ion-label>Today</ion-label>
+                <ion-radio checked="checked" value="today"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label>This Week</ion-label>
+                <ion-radio value="week"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label>Overall</ion-label>
+                <ion-radio value="overall"></ion-radio>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-list-header>Custom Range</ion-list-header>
+            <ion-item>
+                <ion-label fixed>From</ion-label>
+                <ion-datetime
+                        [ngModel]="customRange"
+                        name="customStart"
+                        (click)="f.controls['range'].reset()"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label fixed>To</ion-label>
+                <ion-datetime
+                        [ngModel]="customRange"
+                        name="customEnd"
+                        (click)="f.controls['range'].reset()"></ion-datetime>
+            </ion-item>
+        </ion-list>
+        <button ion-button type="submit" block>Go</button>
+    </form>
+</ion-content>

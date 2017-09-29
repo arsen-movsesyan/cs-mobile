@@ -1,0 +1,43 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Appliance Images</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-list-header>
+                    Sticker Image
+                    <button ion-button outline item-right icon-left type="button" (click)="onTakeStickerImage()">
+                        <ion-icon name="camera"></ion-icon>
+                        {{appliance.sticker_image ? "Change" : "Take"}} Sticker Image
+                    </button>
+                </ion-list-header>
+                <img [src]="appliance.sticker_image" *ngIf="appliance.sticker_image">
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-list-header>
+                    Pictures
+                    <button ion-button outline item-right icon-left (click)="onTakePicture()">
+                        <ion-icon name="camera"></ion-icon>
+                        Take Picture
+                    </button>
+                </ion-list-header>
+                <ion-slides>
+                    <ion-slide *ngFor="let pic of appliance.pictures">
+                        <img [src]="pic.picture">
+                        {{pic.title}}
+                        <button ion-button clear item-right (click)="onRemovePicture(pic.id)">Remove</button>
+                    </ion-slide>
+                </ion-slides>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

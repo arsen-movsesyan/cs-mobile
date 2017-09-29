@@ -1,0 +1,44 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Order Close Review</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="reviewForm" (ngSubmit)="onOrderClose()">
+        <ion-list>
+            <ion-item>
+                <ion-textarea formControlName="closeReason" placeholder="Close Reason"></ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ion-label>Make invisible</ion-label>
+                <ion-toggle formControlName="makeInvisible"></ion-toggle>
+            </ion-item>
+        </ion-list>
+        <div formArrayName="appliances">
+            <h4>Appliances</h4>
+            <ion-card *ngFor="let appliance of includedAppliances; let i=index">
+                <ion-card-header>
+                    {{appliance.appliance.type.appliance}} {{appliance.appliance.model_make}}
+                </ion-card-header>
+                <ion-card-content [formGroupName]="i">
+                    <ion-list>
+                        <button
+                                ion-item
+                                type="button"
+                                (click)="onSelectAppliance(i)"
+                                *ngIf="includedAppliances[i].includedParts.length > 0">
+                            Parts
+                            <ion-badge color="danger">{{includedAppliances[i].includedParts.length}}</ion-badge>
+                        </button>
+                    </ion-list>
+                </ion-card-content>
+            </ion-card>
+            <button ion-button block type="submit" color="danger">
+                Close Order
+            </button>
+        </div>
+    </form>
+</ion-content>

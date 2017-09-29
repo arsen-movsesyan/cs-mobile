@@ -1,0 +1,75 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="onShowOptions()">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>{{appliance.type.appliance}}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item *ngIf="appliance.fixed">
+            <h4>This appliance is already fixed</h4>
+        </ion-item>
+        <button ion-item (click)="onImagesLoad()">
+            <ion-icon name="image" item-start color="secondary"></ion-icon>
+            Images
+        </button>
+
+        <ion-list-header>Parts</ion-list-header>
+        <ion-item-sliding *ngFor="let part of parts" #slidingItem>
+            <ion-item>
+                <ion-icon name="cog" [color]="part.iconColor"></ion-icon>
+                {{part.requestedPart.requested_part_number}}
+                <p>{{part.statusReadable}}</p>
+                <ion-note item-end>slide to change</ion-note>
+            </ion-item>
+            <ion-item-options side="right">
+                <button
+                        ion-button
+                        color="danger"
+                        (click)="onCancelRequest(part.requestedPart, slidingItem)"
+                        *ngIf="part.statusReadable!=='Installed'">
+                    <ion-icon name="trash"></ion-icon>
+                    Remove
+                </button>
+                <button
+                        ion-button
+                        color="danger"
+                        (click)="onUninstall(part.installedPart, slidingItem)"
+                        *ngIf="part.statusReadable=='Installed'">
+                    <ion-icon name="trash"></ion-icon>
+                    Uninstall
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+
+        <ion-list-header>Appliance Details</ion-list-header>
+
+        <ion-item>
+            <p>Make</p>
+            {{ appliance.model_make}}
+        </ion-item>
+        <ion-item>
+            <p>Model Number</p>
+            {{appliance.model_number}}
+        </ion-item>
+        <ion-item *ngIf="appliance.serial_number">
+            <p>Serial Number</p>
+            {{appliance.serial_number}}
+        </ion-item>
+        <ion-item>
+            <p>Problem Description</p>
+            {{appliance.problem_description}}
+        </ion-item>
+        <ion-item *ngIf="appliance.detailed_problem_description">
+            <p>Detailed Description</p>
+            {{appliance.detailed_problem_description}}
+        </ion-item>
+    </ion-list>
+</ion-content>
