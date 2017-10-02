@@ -9,6 +9,7 @@ export class MembershipModel {
       public color: string,
       public off_start: string,
       public off_end: string,
+      public is_admin: boolean,
       public technician: TechnicianModel
   ) {}
 }

@@ -49,6 +49,11 @@
                         <ion-icon name="person" item-left color="primary"></ion-icon>
                         Order Details
                     </button>
+                    <button ion-item (click)="onReassign()">
+                        <ion-label>Assigned
+                        </ion-label>
+                        <ion-note item-end><strong>{{customer.current_assigned_start|date:'mediumDate'}}</strong></ion-note>
+                    </button>
                 </ion-list>
             </ion-col>
         </ion-row>

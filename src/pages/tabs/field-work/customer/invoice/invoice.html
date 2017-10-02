@@ -27,9 +27,18 @@
             </ion-note>
         </ion-item>
         <div *ngIf="invoice.labor_type=='labor'">
-            <button ion-item *ngFor="let appliance of invoice.map_appliances">
-                Appliance Name Here
-            </button>
+            <ion-item-divider></ion-item-divider>
+            <div *ngFor="let appliance of invoice.map_appliances">
+
+                <button ion-item (click)="onChooseAppliance(appliance)" *ngIf="appliance.parts.length > 0">
+                    {{_getApplianceByMapId(appliance.appliance).model_make}} {{_getApplianceByMapId(appliance.appliance).model_number}}
+                </button>
+                <ion-item  *ngIf="appliance.parts.length == 0">
+                    {{_getApplianceByMapId(appliance.appliance).model_make}} {{_getApplianceByMapId(appliance.appliance).model_number}}
+                </ion-item>
+
+            </div>
+            <ion-item-divider></ion-item-divider>
             <ion-item>
                 Parts Total
                 <ion-note item-end>${{partsPrice()}}</ion-note>

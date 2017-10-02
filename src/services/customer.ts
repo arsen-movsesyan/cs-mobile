@@ -27,12 +27,13 @@ export class CustomerService {
   partUninstall = new EventEmitter<{applianceId: number, partId: number}>();
   applianceFixed = new EventEmitter<ApplianceFixModel>();
   applianceUnfixed = new EventEmitter<ApplianceUnfixModel>();
+  invoiceDeleted = new EventEmitter<{customerId: number, invoiceId: number}>();
 
   constructor(
       private authService: AuthService,
       private http: Http,
       private constants: ConstantsService,
-      private applianceService: ApplianceService
+      private applianceService: ApplianceService,
   ) {
     this._fetchCustomers()
         .subscribe(
@@ -52,6 +53,10 @@ export class CustomerService {
     return this._fetchCustomers();
   }
 
+  retrieveLocalCustomers() {
+    return this.customers;
+  }
+
   reopenCustomer(customerId: number, restoreAppliances: boolean) {
     return this.http.put(
         this.constants.getBaseApiUrl() + '/customer/reopen/' + customerId + '/',
@@ -65,7 +70,7 @@ export class CustomerService {
   }
 
   saveEmail(email: string, customerId: number) {
-    const url = this.constants.getBaseApiUrl() + '/technician/customer/' + customerId + '/';
+    const url = this.constants.getBaseApiUrl() + '/technician/customer/edit_email/' + customerId + '/';
     return this.http.put(url,
         {email: email},
         {headers: this.authService.getAuthHeader()}
@@ -259,8 +264,55 @@ export class CustomerService {
 
   }
 
+  customerReassign(customerId: number, assignStart: string, assignEnd: string) {
+    console.log(assignStart);
+    console.log(assignEnd);
+    return this.http.put(
+        this.constants.getBaseApiUrl() + '/technician/customer/reassign/' + customerId + '/',
+        {
+          current_assigned_start: assignStart,
+          current_assigned_end: assignEnd
+        },
+        {headers: this.authService.getAuthHeader()}
+    )
+        .map((data: Response) => data.json())
+        .do((assignTime) => {
+          console.log(assignTime);
+        });
+  }
+
+  deleteInvoice(customerId: number, invoiceId: number, unfixAppliances: boolean) {
+    return this.http.delete(
+        this.constants.getBaseApiUrl() + '/customer/' + customerId + '/invoice/' + invoiceId + '/',
+        {
+          headers: this.authService.getAuthHeader(),
+          body: {unfix_appliances: unfixAppliances}
+        }
+    )
+        .map(() => {})
+        .do(() => {
+          this.invoiceDeleted.emit({
+            customerId: customerId,
+            invoiceId: invoiceId
+          });
+        });
+  }
+
+  sendInvoiceEmail(customerId: number, invoiceId: number, email: string) {
+    return this.http.post(
+        this.constants.getBaseApiUrl() + '/invoice/' + invoiceId + '/email_send/',
+        {
+          customer_email: email
+        },
+        {headers: this.authService.getAuthHeader()}
+    )
+        .map(() => {})
+        .do(() => {});
+  }
+
   private _fetchCustomers() {
-    return this.http.get(this.constants.getBaseApiUrl() + '/customer/', {headers: this.authService.getAuthHeader()})
+    return this.http.get(this.constants.getBaseApiUrl() + '/customer/',
+        {headers: this.authService.getAuthHeader()})
         .map((response: Response) => response.json().results);
   }
 
@@ -305,4 +357,4 @@ export class CustomerService {
         src.order_status
     );
   }
-  }
+}

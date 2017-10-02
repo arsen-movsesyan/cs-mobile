@@ -9,6 +9,7 @@ import {ActionSheetController, AlertController, LoadingController, ModalControll
 import {JobRangePage} from "./job-range/job-rage";
 import * as moment from "moment";
 import {CustomerPage} from "../customer/customer";
+import {SharedFullCalendar} from "../../calendar/full_calendar";
 
 @Component({
   selector: 'page-customers-list',
@@ -40,6 +41,13 @@ export class CustomersListPage implements OnInit {
           text: 'Reload Customers',
           handler: () => {
             this._loadCustomers(true);
+          }
+        },
+        {
+          text: 'Calendar View',
+          handler: () => {
+            this.navCtrl.parent.getByIndex(0).setRoot(SharedFullCalendar);
+            // this.navCtrl.push(SharedFullCalendar);
           }
         },
         {
@@ -102,10 +110,12 @@ export class CustomersListPage implements OnInit {
               console.log(this.allCustomers);
             },
             err => {
+              console.log(err);
+              console.log(err.json());
               loading.dismiss().then();
               const alert = this.alertCtrl.create({
                 title: 'Failed loading customers!',
-                message: err,
+                message: err.json(),
                 buttons: ['Close']
               });
               alert.present().then();

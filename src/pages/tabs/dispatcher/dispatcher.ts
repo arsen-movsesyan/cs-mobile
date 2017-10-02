@@ -2,7 +2,7 @@
  * Created by Arsen Movsesyan on 9/21/17.
  */
 import {Component} from "@angular/core";
-import {NavController} from "ionic-angular";
+// import {NavController} from "ionic-angular";
 
 @Component({
   selector: 'page-dispatcher',
@@ -10,7 +10,7 @@ import {NavController} from "ionic-angular";
 })
 export class DispatcherPage {
   constructor(
-      private navCtrl: NavController
+      // private navCtrl: NavController
   ) {
     console.log('In Dispatcher');
   }

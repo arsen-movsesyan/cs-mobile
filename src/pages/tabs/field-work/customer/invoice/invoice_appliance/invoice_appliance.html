@@ -1,0 +1,19 @@
+<ion-header xmlns="http://www.w3.org/1999/html">
+
+    <ion-navbar>
+        <ion-title>{{customerAppliance.model_make}}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+    <h1>Installed Parts</h1>
+    <ion-card *ngFor="let part of invoiceAppliance.parts">
+        <ion-card-content>
+            <h2>{{part.installed_part_number}}</h2>
+            <p>Price: <strong>${{part.invoice_price}}</strong></p>
+        </ion-card-content>
+
+    </ion-card>
+
+    <button ion-button block type="button" (click)="onCancel()">Back</button>
+</ion-content>

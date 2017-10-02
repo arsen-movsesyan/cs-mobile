@@ -1,0 +1,47 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-buttons start>
+            <button ion-button icon-only (click)="onCancel()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>Assigned Datetime</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <!--<form>-->
+        <ion-list>
+            <ion-item>
+                {{customer.full_name}}
+            </ion-item>
+            <ion-item>
+                {{customer.address.mailing_address}}
+            </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-list-header>Assign Start</ion-list-header>
+            <ion-item>
+                <ion-label>Start Date</ion-label>
+                <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="assignDatetime[0]"></ion-datetime>
+            </ion-item>
+
+
+            <ion-item>
+                <ion-label>Start Time</ion-label>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"  [(ngModel)]="assignDatetime[1]"></ion-datetime>
+            </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-item>
+                <ion-label>Duration</ion-label>
+                <ion-datetime displayFormat="h:mm" [(ngModel)]="duration" minuteValues="0,30"></ion-datetime>
+            </ion-item>
+        </ion-list>
+        <button ion-button type="button" block (click)="onSubmit()">Reassign</button>
+    <!--</form>-->
+</ion-content>

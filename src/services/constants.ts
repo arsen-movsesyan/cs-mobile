@@ -3,7 +3,8 @@
  */
 
 export class ConstantsService {
-  private BASE_URL = 'http://192.168.1.10:8080';
+  // private BASE_URL = 'https://www.comfortschedule.com';
+  private BASE_URL = 'http://192.168.1.12:8080';
   private API_PATH = '/api/v1';
 
   getBaseApiUrl() {

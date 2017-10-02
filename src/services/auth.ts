@@ -25,9 +25,8 @@ export class AuthService {
           if(this.token) {
             this.http.get(
                 this.constants.getBaseApiUrl() + '/auth/validate/',
-                {
-                  headers: this.getAuthHeader()
-                })
+                {headers: this.getAuthHeader()}
+                )
                 .subscribe(
                     (response: Response) => {
                       this._setAuthData(response.json());
@@ -93,6 +92,10 @@ export class AuthService {
       }
     }
     return null;
+  }
+
+  isAdmin() {
+    return this.authData.is_organization_admin;
   }
 
   private _setAuthData(authData: AuthModel) {

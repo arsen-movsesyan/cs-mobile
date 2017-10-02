@@ -27,22 +27,14 @@
     </ion-refresher>
 
     <ion-list>
-        <ion-item *ngFor="let customer of customers">
-      <span ion-text color="primary">
-        <ion-icon name="contact"></ion-icon>
-        {{customer.full_name}}
-      </span>
-            <button ion-button clear item-end (click)="onSelectCustomer(customer)">Open</button>
-            <br>
+        <button ion-item *ngFor="let customer of customers" (click)="onSelectCustomer(customer)">
+            <span ion-text color="primary">
+                <ion-icon name="contact"></ion-icon>
+                {{customer.full_name}}
+            </span>
             <p>
-                <ion-icon name="pin" color="danger"></ion-icon>
-                {{customer.address.mailing_address}}</p>
-            <p>
-        <span ion-text color="secondary">
-          <ion-icon name="call"></ion-icon>
-          {{customer.contactinfo.phone1_readable}}
-        </span>
+                {{customer.address.mailing_address}}
             </p>
-        </ion-item>
+        </button>
     </ion-list>
 </ion-content>

@@ -38,6 +38,11 @@ import {AppliancePartsPage} from "../pages/tabs/field-work/customer/generate_inv
 import {CloseReviewPage} from "../pages/tabs/field-work/customer/close-review/close-review";
 import {CloseAppliancePartsPage} from "../pages/tabs/field-work/customer/close-review/close_appliance_parts/close_appliance_parts";
 import {UnfixAppliancePartsPage} from "../pages/tabs/field-work/customer/appliance/unfix-appliance-parts/unfix-appliance-parts";
+import {TechnicianCustomerReassignPage} from "../pages/tabs/field-work/customer/reassign/reassign";
+import {InvoiceAppliancePage} from "../pages/tabs/field-work/customer/invoice/invoice_appliance/invoice_appliance";
+import {CalendarComponent} from "ap-angular2-fullcalendar";
+import {SharedFullCalendar} from "../pages/tabs/calendar/full_calendar";
+import {Calendar} from "@ionic-native/calendar";
 
 @NgModule({
   declarations: [
@@ -61,7 +66,11 @@ import {UnfixAppliancePartsPage} from "../pages/tabs/field-work/customer/applian
     AppliancePartsPage,
     CloseReviewPage,
     CloseAppliancePartsPage,
-    UnfixAppliancePartsPage
+    UnfixAppliancePartsPage,
+    TechnicianCustomerReassignPage,
+    InvoiceAppliancePage,
+    CalendarComponent,
+    SharedFullCalendar
   ],
   imports: [
     BrowserModule,
@@ -94,7 +103,10 @@ import {UnfixAppliancePartsPage} from "../pages/tabs/field-work/customer/applian
     AppliancePartsPage,
     CloseReviewPage,
     CloseAppliancePartsPage,
-    UnfixAppliancePartsPage
+    UnfixAppliancePartsPage,
+    TechnicianCustomerReassignPage,
+    InvoiceAppliancePage,
+    SharedFullCalendar
   ],
   providers: [
     StatusBar,
@@ -113,7 +125,8 @@ import {UnfixAppliancePartsPage} from "../pages/tabs/field-work/customer/applian
     Camera,
     File,
     FileTransfer,
-    FileTransferService
+    FileTransferService,
+    Calendar
   ]
 })
 export class AppModule {}

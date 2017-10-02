@@ -26,6 +26,7 @@ import {GenerateInvoicePage} from "./generate_invoice/generate_invoice";
 import {CloseReviewPage} from "./close-review/close-review";
 import {InstalledPartModel} from "../../../../models/installed_part";
 import {RequestedPartModel} from "../../../../models/requested_part";
+import {TechnicianCustomerReassignPage} from "./reassign/reassign";
 
 @Component({
   selector: 'page-customer',
@@ -128,6 +129,20 @@ export class CustomerPage implements OnInit {
           this.customer.appliances[foundIndex].installed_parts = newInstalledParts;
           this.customer.appliances[foundIndex].fixed = unfixedAppliance.fixed;
           this._initAppliances();
+        });
+    this.customerService.invoiceDeleted
+        .subscribe((data: {
+          customerId: number,
+          invoiceId: number
+        }) => {
+          if (this.customer.id === data.customerId) {
+            const foundIndex = this.customer.invoices.findIndex((inv: InvoiceModel) => {
+              return inv.id === data.invoiceId;
+            });
+            // this.customer.invoices.splice(foundIndex, 1);
+            this.customer.invoices[foundIndex].make_void = true;
+            this._initInvoices()
+          }
         });
   }
 
@@ -311,6 +326,24 @@ export class CustomerPage implements OnInit {
       });
       alert.present().then();
     }
+  }
+
+  onReassign() {
+    const reassign = this.modalCtrl.create(TechnicianCustomerReassignPage, {
+      customer: this.customer
+    });
+    reassign.present().then();
+    reassign.onDidDismiss((reassignedValue) => {
+      if (reassignedValue) {
+        this.customerService.customerReassign(this.customer.id,
+            reassignedValue.assignStart.utc().format(),
+            reassignedValue.assignEnd.utc().format()
+        )
+            .subscribe((newValues) => {
+              console.log('Returned')
+            });
+      }
+    });
   }
 
   private _addEditEmail() {
