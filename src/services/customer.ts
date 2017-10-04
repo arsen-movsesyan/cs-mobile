@@ -265,8 +265,6 @@ export class CustomerService {
   }
 
   customerReassign(customerId: number, assignStart: string, assignEnd: string) {
-    console.log(assignStart);
-    console.log(assignEnd);
     return this.http.put(
         this.constants.getBaseApiUrl() + '/technician/customer/reassign/' + customerId + '/',
         {
@@ -275,10 +273,10 @@ export class CustomerService {
         },
         {headers: this.authService.getAuthHeader()}
     )
-        .map((data: Response) => data.json())
-        .do((assignTime) => {
-          console.log(assignTime);
-        });
+        .map((data: Response) => data.json());
+        // .do((assignTime) => {
+        //   console.log(assignTime);
+        // });
   }
 
   deleteInvoice(customerId: number, invoiceId: number, unfixAppliances: boolean) {

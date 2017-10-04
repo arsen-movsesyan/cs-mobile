@@ -22,17 +22,19 @@ export class TechnicianCustomerReassignPage implements OnInit {
 
   ngOnInit() {
     this.customer = this.navParams.get('customer');
-    this.assignDatetime = this.customer.current_assigned_start.split('T');
-    const start = moment.utc(this.customer.current_assigned_start);
-    const end = moment.utc(this.customer.current_assigned_end);
+    const offsetTime = moment(this.customer.current_assigned_start);
+
+    this.assignDatetime = offsetTime.format().split('T');
+    const start = moment(this.customer.current_assigned_start);
+    const end = moment(this.customer.current_assigned_end);
     this.duration = moment.utc(end.diff(start)).format('HH:mm');
   }
 
   onSubmit() {
     this.viewCtrl.dismiss({
-      assignStart: moment(this.assignDatetime.join('T')),
+      assignStart: moment.utc(this.assignDatetime.join('T')),
       // duration: moment.duration(this.duration),
-      assignEnd: moment(this.assignDatetime.join('T')).add(moment.duration(this.duration))
+      assignEnd: moment.utc(this.assignDatetime.join('T')).add(moment.duration(this.duration))
     }).then();
   }
 

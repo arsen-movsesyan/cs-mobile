@@ -150,7 +150,6 @@ export class CustomerPage implements OnInit {
     this.customer = this.navParamsCtrl.get('customer');
     this._initAppliances();
     this._initInvoices();
-
   }
 
   invoiceAvailable() {
@@ -336,11 +335,12 @@ export class CustomerPage implements OnInit {
     reassign.onDidDismiss((reassignedValue) => {
       if (reassignedValue) {
         this.customerService.customerReassign(this.customer.id,
-            reassignedValue.assignStart.utc().format(),
-            reassignedValue.assignEnd.utc().format()
+            reassignedValue.assignStart.format(),
+            reassignedValue.assignEnd.format()
         )
             .subscribe((newValues) => {
-              console.log('Returned')
+              this.customer.current_assigned_start = newValues.current_assigned_start;
+              this.customer.current_assigned_end = newValues.current_assigned_end;
             });
       }
     });
