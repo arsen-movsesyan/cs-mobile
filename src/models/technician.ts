@@ -5,6 +5,7 @@ import {ContactInfoModel} from './contactinfo';
 
 export class TechnicianModel {
   constructor(
+    public id: number,
     public username: string,
     public email: string,
     public first_name: string,

@@ -8,6 +8,8 @@ import { CallNumber } from "@ionic-native/call-number";
 import { IonicStorageModule } from "@ionic/storage";
 import { HttpModule } from "@angular/http";
 import {AgmCoreModule, GoogleMapsAPIWrapper} from "@agm/core";
+import {CalendarComponent} from "ap-angular2-fullcalendar/src/calendar/calendar";
+import {Calendar} from "@ionic-native/calendar";
 
 import { AuthService } from "../services/auth";
 import { ConstantsService } from "../services/constants";
@@ -40,9 +42,7 @@ import {CloseAppliancePartsPage} from "../pages/tabs/field-work/customer/close-r
 import {UnfixAppliancePartsPage} from "../pages/tabs/field-work/customer/appliance/unfix-appliance-parts/unfix-appliance-parts";
 import {TechnicianCustomerReassignPage} from "../pages/tabs/field-work/customer/reassign/reassign";
 import {InvoiceAppliancePage} from "../pages/tabs/field-work/customer/invoice/invoice_appliance/invoice_appliance";
-import {CalendarComponent} from "ap-angular2-fullcalendar";
 import {SharedFullCalendar} from "../pages/tabs/calendar/full_calendar";
-import {Calendar} from "@ionic-native/calendar";
 
 @NgModule({
   declarations: [

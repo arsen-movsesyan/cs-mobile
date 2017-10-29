@@ -1,8 +1,9 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {DispatcherPage} from "./dispatcher/dispatcher";
 import {SettingsPage} from "./settings/settings";
 import {AuthService} from "../../services/auth";
 import {CustomersListPage} from "./field-work/customers-list/customers-list";
+import {Tabs} from "ionic-angular";
 
 @Component({
     selector: 'page-tabs',
@@ -13,6 +14,7 @@ export class TabsPage implements OnInit {
   dispatcherPage: any = DispatcherPage;
   fieldworkPage: any = CustomersListPage;
   settingsPage: any = SettingsPage;
+  @ViewChild('mainTabs') tabsRef: Tabs;
 
   constructor(
       private authService: AuthService
@@ -21,4 +23,13 @@ export class TabsPage implements OnInit {
   ngOnInit() {
     this.isAdmin = this.authService.getAuthData('is_organization_admin');
   }
+
+  ionViewDidEnter() {
+    if (this.isAdmin) {
+      this.tabsRef.select(2);
+    } else {
+      this.tabsRef.select(0);
+    }
+  }
+
 }

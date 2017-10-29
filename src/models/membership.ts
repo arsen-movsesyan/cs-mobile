@@ -5,6 +5,7 @@ import {TechnicianModel} from './technician';
 
 export class MembershipModel {
   constructor(
+      public id: number,
       public nickname: string,
       public color: string,
       public off_start: string,

@@ -7,6 +7,7 @@ import {ContactInfoCreateModel, ContactInfoModel} from './contactinfo';
 import {ReportedApplianceCreateModel, ReportedApplianceModel} from './reported_appliance';
 import {ApplianceFixModel, ApplianceModel} from './appliance';
 import {InvoiceModel} from './invoice';
+import {AssignmentModel} from "./assignment";
 
 export class CustomerModel {
     constructor(
@@ -23,7 +24,8 @@ export class CustomerModel {
         public appliances: ApplianceModel[],
         public invoices: InvoiceModel[],
         public current_assigned_start: string,
-        public current_assigned_end: string
+        public current_assigned_end: string,
+        public assignments: AssignmentModel[]
     ) {}
 }
 

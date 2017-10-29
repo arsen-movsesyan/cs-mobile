@@ -6,6 +6,7 @@ import {OrganizationHeadModel} from './organization';
 
 export class AuthModel {
   constructor(
+      public id: number,
       public username: string,
       public email: string,
       public first_name: string,
